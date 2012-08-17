@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>English</string>
+    <key>CFBundleExecutable</key>
+    <string>Flywire</string>
+    <key>CFBundleName</key>
+    <string>Flywire</string>
+    <key>CFBundleGetInfoString</key>
+    <string>Bentokit Flywire, Copyright 2002-2009 Contributors</string>
+    <key>CFBundleIconFile</key>
+    <string>flywire.icns</string>
+    <key>CFBundleIdentifier</key>
+    <string>org.bentokit</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleShortVersionString</key>
+    <string>2009xxxx</string>
+    <key>CFBundleVersion</key>
+    <string>2009xxxx</string>
+    <key>Java</key>
+    <dict>
+        <key>JVMVersion</key>
+        <string>1.4*</string>
+        <key>MainClass</key>
+        <string>sun.plugin.panel.ControlPanel</string>
+        <key>VMOptions</key>
+        <string>-Xbootclasspath/p:/System/Library/Frameworks/JavaVM.framework/Versions/1.4.2/Home/lib/jaws.jar:/System/Library/Frameworks/JavaVM.framework/Versions/1.4.2/Home/lib/netscape.jar</string>
+    </dict>
+    <key>LSHasLocalizedDisplayName</key>
+    <true/>
+    <key>NSHumanReadableCopyright</key>
+    <string>Copyright 2003 Apple Computer, Inc., All Rights Reserved.</string>
+    <key>NSJavaPath</key>
+    <array/>
+</dict>    
+</plist>

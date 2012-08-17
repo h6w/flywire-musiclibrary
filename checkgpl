@@ -1,0 +1,18 @@
+#!/bin/sh
+HEADERFILE=./gplheader
+if [ -n "$1" ]
+then
+#  echo $HEADERFILE
+  HEADERSIZE=$(stat -c%s "$HEADERFILE")
+#  echo $HEADERSIZE
+  DIFFER=`cmp -n $HEADERSIZE $1 $HEADERFILE`
+#  echo $DIFFER
+  if [ "$DIFFER" ]
+  then
+    echo "Prepending the GPL header to $1".
+    cat $HEADERFILE $1 | sponge $1
+  fi
+else
+  echo "Parameter is empty, looking at whole tree"
+  find ./ -name '*.java' | xargs -I {} $0 {}
+fi

@@ -1,0 +1,63 @@
+2007/08/20 22:38:16 Starting cygwin install, version 2.573.2.2
+2007/08/20 22:38:16 io_stream_cygfile: fopen(/etc/setup/last-action) failed 2 No such file or directory
+2007/08/20 22:38:16 io_stream_cygfile: fopen(/etc/setup/last-mirror) failed 2 No such file or directory
+2007/08/20 22:38:16 io_stream_cygfile: fopen(/etc/setup/last-connection) failed 2 No such file or directory
+2007/08/20 22:38:16 io_stream_cygfile: fopen(/etc/setup/last-cache) failed 2 No such file or directory
+2007/08/20 22:38:16 Current Directory: C:\Program Files\Mozilla Firefox
+2007/08/20 22:38:16 Changing gid to Users
+2007/08/20 22:38:16 Could not open service McShield for query, start and stop. McAfee may not be installed, or we don't have access.
+2007/08/20 22:38:21 io_stream_cygfile: fopen(/etc/setup/installed.db) failed 2 No such file or directory
+2007/08/20 22:38:23 source: download
+2007/08/20 22:38:44 io_stream_cygfile: fopen(/etc/setup/last-cache) failed 2 No such file or directory
+2007/08/20 22:38:44 Selected local directory: C:\Documents and Settings\Tudor\Desktop\cygwin-install
+2007/08/20 22:38:46 net: Direct
+2007/08/20 22:38:46 io_stream_cygfile: fopen(/etc/setup/mirrors-lst) failed 2 No such file or directory
+2007/08/20 22:38:55 io_stream_cygfile: fopen(/etc/setup/mirrors-lst) failed 2 No such file or directory
+2007/08/20 22:38:55 io_stream_cygfile: fopen(/etc/setup/last-mirror) failed 2 No such file or directory
+2007/08/20 22:38:55 site: http://mirror.aarnet.edu.au/pub/sourceware/cygwin
+2007/08/20 22:38:57 io_stream_cygfile: fopen(/etc/setup/timestamp) failed 2 No such file or directory
+2007/08/20 22:39:03 Warning, the default trust level for package  does not meet this specification libpgtypes2
+2007/08/20 22:39:03 Warning, the default trust level for package  does not meet this specification libecpg5
+2007/08/20 22:42:18 Adding required dependency atk: Selecting version 1.10.3-1 for installation.
+2007/08/20 22:42:18 Adding required dependency glib2: Selecting version 2.10.3-1 for installation.
+2007/08/20 22:42:18 Adding required dependency ncurses: Selecting version 5.5-3 for installation.
+2007/08/20 22:42:18 Adding required dependency pkg-config: Selecting version 0.21-1 for installation.
+2007/08/20 22:42:18 Adding required dependency pylibxml2: Selecting version 2.6.28-2 for installation.
+2007/08/20 22:42:20 Downloaded C:\Documents and Settings\Tudor\Desktop\cygwin-install/http%3a%2f%2fmirror.aarnet.edu.au%2fpub%2fsourceware%2fcygwin/release/GNOME/atk/atk-1.10.3-1.tar.bz2
+2007/08/20 22:42:20 Downloaded C:\Documents and Settings\Tudor\Desktop\cygwin-install/http%3a%2f%2fmirror.aarnet.edu.au%2fpub%2fsourceware%2fcygwin/release/GNOME/atk/atk-runtime/atk-runtime-1.10.3-1.tar.bz2
+2007/08/20 22:42:20 Downloaded C:\Documents and Settings\Tudor\Desktop\cygwin-install/http%3a%2f%2fmirror.aarnet.edu.au%2fpub%2fsourceware%2fcygwin/release/base-passwd/base-passwd-2.2-1.tar.bz2
+2007/08/20 22:42:22 Downloaded C:\Documents and Settings\Tudor\Desktop\cygwin-install/http%3a%2f%2fmirror.aarnet.edu.au%2fpub%2fsourceware%2fcygwin/release/bash/bash-3.2.17-15.tar.bz2
+2007/08/20 22:42:22 Downloaded C:\Documents and Settings\Tudor\Desktop\cygwin-install/http%3a%2f%2fmirror.aarnet.edu.au%2fpub%2fsourceware%2fcygwin/release/_obsolete/clear/clear-1.0-2.tar.bz2
+2007/08/20 22:42:28 Downloaded C:\Documents and Settings\Tudor\Desktop\cygwin-install/http%3a%2f%2fmirror.aarnet.edu.au%2fpub%2fsourceware%2fcygwin/release/coreutils/coreutils-6.9-4.tar.bz2
+2007/08/20 22:42:29 Downloaded C:\Documents and Settings\Tudor\Desktop\cygwin-install/http%3a%2f%2fmirror.aarnet.edu.au%2fpub%2fsourceware%2fcygwin/release/crypt/crypt-1.1-1.tar.bz2
+2007/08/20 22:42:29 Downloaded C:\Documents and Settings\Tudor\Desktop\cygwin-install/http%3a%2f%2fmirror.aarnet.edu.au%2fpub%2fsourceware%2fcygwin/release/cygrunsrv/cygrunsrv-1.17-1.tar.bz2
+2007/08/20 22:42:33 Downloaded C:\Documents and Settings\Tudor\Desktop\cygwin-install/http%3a%2f%2fmirror.aarnet.edu.au%2fpub%2fsourceware%2fcygwin/release/cygwin/cygwin-1.5.24-2.tar.bz2
+2007/08/20 22:42:34 Downloaded C:\Documents and Settings\Tudor\Desktop\cygwin-install/http%3a%2f%2fmirror.aarnet.edu.au%2fpub%2fsourceware%2fcygwin/release/editrights/editrights-1.01-1.tar.bz2
+2007/08/20 22:42:36 Downloaded C:\Documents and Settings\Tudor\Desktop\cygwin-install/http%3a%2f%2fmirror.aarnet.edu.au%2fpub%2fsourceware%2fcygwin/release/gawk/gawk-3.1.5-4.tar.bz2
+2007/08/20 22:42:38 Downloaded C:\Documents and Settings\Tudor\Desktop\cygwin-install/http%3a%2f%2fmirror.aarnet.edu.au%2fpub%2fsourceware%2fcygwin/release/GNOME/glib2/glib2-2.10.3-1.tar.bz2
+2007/08/20 22:42:38 Downloaded C:\Documents and Settings\Tudor\Desktop\cygwin-install/http%3a%2f%2fmirror.aarnet.edu.au%2fpub%2fsourceware%2fcygwin/release/GNOME/glib2/glib2-runtime/glib2-runtime-2.10.3-1.tar.bz2
+2007/08/20 22:42:39 Downloaded C:\Documents and Settings\Tudor\Desktop\cygwin-install/http%3a%2f%2fmirror.aarnet.edu.au%2fpub%2fsourceware%2fcygwin/release/grep/grep-2.5.1a-4.tar.bz2
+2007/08/20 22:42:41 Downloaded C:\Documents and Settings\Tudor\Desktop\cygwin-install/http%3a%2f%2fmirror.aarnet.edu.au%2fpub%2fsourceware%2fcygwin/release/libiconv/libiconv2/libiconv2-1.11-1.tar.bz2
+2007/08/20 22:42:41 Downloaded C:\Documents and Settings\Tudor\Desktop\cygwin-install/http%3a%2f%2fmirror.aarnet.edu.au%2fpub%2fsourceware%2fcygwin/release/gettext/libintl2/libintl2-0.12.1-3.tar.bz2
+2007/08/20 22:42:41 Downloaded C:\Documents and Settings\Tudor\Desktop\cygwin-install/http%3a%2f%2fmirror.aarnet.edu.au%2fpub%2fsourceware%2fcygwin/release/gettext/libintl3/libintl3-0.14.5-1.tar.bz2
+2007/08/20 22:42:42 Downloaded C:\Documents and Settings\Tudor\Desktop\cygwin-install/http%3a%2f%2fmirror.aarnet.edu.au%2fpub%2fsourceware%2fcygwin/release/gettext/libintl8/libintl8-0.15-1.tar.bz2
+2007/08/20 22:42:43 Downloaded C:\Documents and Settings\Tudor\Desktop\cygwin-install/http%3a%2f%2fmirror.aarnet.edu.au%2fpub%2fsourceware%2fcygwin/release/ncurses/libncurses8/libncurses8-5.5-3.tar.bz2
+2007/08/20 22:42:44 Downloaded C:\Documents and Settings\Tudor\Desktop\cygwin-install/http%3a%2f%2fmirror.aarnet.edu.au%2fpub%2fsourceware%2fcygwin/release/pcre/libpcre0/libpcre0-7.2-1.tar.bz2
+2007/08/20 22:42:44 Downloaded C:\Documents and Settings\Tudor\Desktop\cygwin-install/http%3a%2f%2fmirror.aarnet.edu.au%2fpub%2fsourceware%2fcygwin/release/popt/libpopt0/libpopt0-1.6.4-4.tar.bz2
+2007/08/20 22:42:45 Downloaded C:\Documents and Settings\Tudor\Desktop\cygwin-install/http%3a%2f%2fmirror.aarnet.edu.au%2fpub%2fsourceware%2fcygwin/release/readline/libreadline6/libreadline6-5.2.4-8.tar.bz2
+2007/08/20 22:42:45 Downloaded C:\Documents and Settings\Tudor\Desktop\cygwin-install/http%3a%2f%2fmirror.aarnet.edu.au%2fpub%2fsourceware%2fcygwin/release/_obsolete/libxml2-python/libxml2-python-2.6.26-1.tar.bz2
+2007/08/20 22:42:46 Downloaded C:\Documents and Settings\Tudor\Desktop\cygwin-install/http%3a%2f%2fmirror.aarnet.edu.au%2fpub%2fsourceware%2fcygwin/release/minires/minires-1.01-1.tar.bz2
+2007/08/20 22:42:47 Downloaded C:\Documents and Settings\Tudor\Desktop\cygwin-install/http%3a%2f%2fmirror.aarnet.edu.au%2fpub%2fsourceware%2fcygwin/release/ncurses/ncurses-5.5-3.tar.bz2
+2007/08/20 22:42:49 Downloaded C:\Documents and Settings\Tudor\Desktop\cygwin-install/http%3a%2f%2fmirror.aarnet.edu.au%2fpub%2fsourceware%2fcygwin/release/openssh/openssh-4.6p1-1.tar.bz2
+2007/08/20 22:42:52 Downloaded C:\Documents and Settings\Tudor\Desktop\cygwin-install/http%3a%2f%2fmirror.aarnet.edu.au%2fpub%2fsourceware%2fcygwin/release/openssl/openssl-0.9.8e-3.tar.bz2
+2007/08/20 22:42:52 Downloaded C:\Documents and Settings\Tudor\Desktop\cygwin-install/http%3a%2f%2fmirror.aarnet.edu.au%2fpub%2fsourceware%2fcygwin/release/pkg-config/pkg-config-0.21-1.tar.bz2
+2007/08/20 22:42:52 Downloaded C:\Documents and Settings\Tudor\Desktop\cygwin-install/http%3a%2f%2fmirror.aarnet.edu.au%2fpub%2fsourceware%2fcygwin/release/pkgconfig/pkgconfig-0.17.2-3.tar.bz2
+2007/08/20 22:42:53 Downloaded C:\Documents and Settings\Tudor\Desktop\cygwin-install/http%3a%2f%2fmirror.aarnet.edu.au%2fpub%2fsourceware%2fcygwin/release/_obsolete/pylibxml2/pylibxml2-2.6.28-2.tar.bz2
+2007/08/20 22:42:54 Downloaded C:\Documents and Settings\Tudor\Desktop\cygwin-install/http%3a%2f%2fmirror.aarnet.edu.au%2fpub%2fsourceware%2fcygwin/release/rsync/rsync-2.6.6-1.tar.bz2
+2007/08/20 22:42:54 Downloaded C:\Documents and Settings\Tudor\Desktop\cygwin-install/http%3a%2f%2fmirror.aarnet.edu.au%2fpub%2fsourceware%2fcygwin/release/tcp_wrappers/tcp_wrappers-7.6-1.tar.bz2
+2007/08/20 22:42:55 Downloaded C:\Documents and Settings\Tudor\Desktop\cygwin-install/http%3a%2f%2fmirror.aarnet.edu.au%2fpub%2fsourceware%2fcygwin/release/terminfo/terminfo-5.5_20061104-1.tar.bz2
+2007/08/20 22:42:57 Downloaded C:\Documents and Settings\Tudor\Desktop\cygwin-install/http%3a%2f%2fmirror.aarnet.edu.au%2fpub%2fsourceware%2fcygwin/release/texinfo/texinfo-4.8a-1.tar.bz2
+2007/08/20 22:42:58 Downloaded C:\Documents and Settings\Tudor\Desktop\cygwin-install/http%3a%2f%2fmirror.aarnet.edu.au%2fpub%2fsourceware%2fcygwin/release/zlib/zlib-1.2.3-2.tar.bz2
+2007/08/20 22:42:59 Downloaded C:\Documents and Settings\Tudor\Desktop\cygwin-install/http%3a%2f%2fmirror.aarnet.edu.au%2fpub%2fsourceware%2fcygwin/release/_update-info-dir/_update-info-dir-00536-1.tar.bz2
+2007/08/20 22:43:06 note: Download Complete
+2007/08/20 22:43:06 Ending cygwin install

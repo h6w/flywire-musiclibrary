@@ -1,0 +1,456 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+
+
+  <meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
+  <meta name="author" content="Nicholas Fong"><title>How to install OpenSSH sshd server and sftp server on a Windows 2000 or Windows XP</title>
+  
+  <style type="text/css">
+<!--
+a:link       { text-decoration: none; color: #0000ff }
+a:visited    { text-decoration: none; color: #0000ff }
+a:hover      { color: #9900ff }
+-->
+  </style>
+  <script language="javascript" type="text/javascript">
+<!--
+function popitup(url)
+{
+	newwindow=window.open(url,'name','height=300, width=450, resizable=1');
+	if (window.focus) {newwindow.focus()}
+	return false;
+}
+function popitup2(url)
+{
+	newwindow=window.open(url,'name','height=600, width=650, resizable=1');
+	if (window.focus) {newwindow.focus()}
+	return false;
+}	
+// -->
+  </script></head><body bgcolor="#ffffff">
+<p><a href="http://pigtail.net/LRP/printsrv/disclaimer.html">Disclaimer</a></p>
+According to some cygwin gods, the 
+only official document that you should use is&nbsp;&nbsp;<a href="http://pigtail.net/LRP/printsrv/cygwin-doc.html" onclick="return popitup('cygwin-doc.html')">/usr/share/doc/Cygwin/openssh.README</a>
+which is probably true.<br>
+The purpose of this tutorial is for Windows users who are perhaps less familiar 
+with Unix commands wanting to try out the famous
+<a href="http://www.opensource.org/">Open Source</a> ssh server (openSSH) on a desktop Windows XP <img src="cygwin-sshd_files/windows_002.png" alt="" border="0" height="17" width="22">.
+<p>The behavior of Windows 2003 Server is different. <a href="http://www.cs.bham.ac.uk/%7Esmp/projects/ssh-windows/">Follow this&nbsp;link</a>
+to install OpenSSH on Windows 2003 Server, by Stephen Pillinger of the
+School of Computer Science, University of Brimingham. Or <a href="http://ist.uwaterloo.ca/%7Ekscully/CygwinSSHD_W2K3.html">this link</a> to install Cygwin SSH server on Windows 2003 Server, by &nbsp;Kevin Scully at the University of Waterloo, Ontario, Canada.
+</p>
+<p>There seems to be some problems when using cygwin ssh with McAfee 8.0i. A 
+work around to that problem is available below.</p>
+<p><b>Please don't send any questions to the cygwin mailing list to ask questions about this page as 
+it seems to provoke
+them severely. They considered and declared the instructions on this page "broken" and "random" but won't constructively
+say what is "broken"; instead some went on launching personal attacks. The information here is provided "<font color="#ff0000">as is, 
+in good faith</font>" with no&nbsp;guarantee
+it will work. <font color="#ff0000">If it doesn't work, then it doesn't work.</font>
+Don't send any questions to the Cygwin mailing list to ask why and
+provoke them. If you must go to Cygwin mailing list to ask, you better 
+<a href="http://pigtail.net/LRP/printsrv/remove-cygwin.html" onclick="return popitup2('remove-cygwin.html')">completely
+remove Cygwin</a>&nbsp;before you go to the mailing list to ask questions and 
+don't even mention that you have looked at this web page (to avoid pissing them 
+off).
+</b></p>
+<p><b>Read this
+<a href="http://pigtail.net/LRP/printsrv/disclaimer.html">Disclaimer</a>.&nbsp; </b></p>
+<p>Constructive comments are of course welcome, in the original spirit of the 
+Internet, sharing experience and knowledge regarding bug fixes and improvements 
+to benefit other users of the Internet community. 
+My email address is <img src="cygwin-sshd_files/fong.png" border="0" height="15" width="129"></p>
+<hr>
+<p><img style="width: 200px; height: 121px;" alt="cygwin-openssh" src="cygwin-sshd_files/cygwin-sshd.jpg">&nbsp;&nbsp;&nbsp; </p>
+<p>How to install a <b>ssh server</b> (called sshd, from <a href="http://www.openssh.org/">OpenSSH</a>) on a <img src="cygwin-sshd_files/windows_002.png" alt="" border="0" height="17" width="22"> 
+Windows 2000 or XP<br>
+How to install a <b>sftp server</b> on a <img src="cygwin-sshd_files/windows_002.png" alt="" border="0" height="17" width="22"> 
+Windows 2000 or&nbsp;XP<br>
+</p>
+<p><a target="_blank" href="http://www.investintech.com/">
+<img src="cygwin-sshd_files/investintech.gif" border="0" height="39" width="205"></a><br>
+If you need a <b>PDF converter</b>, the post powerful
+<a target="_blank" href="http://www.investintech.com/">pdf converter</a> package 
+available is Investintech's
+<a target="_blank" href="http://www.investintech.com/products/server/absolutepdfserver/absolutepdfservermain/">
+pdf server</a> software bundle.</p>
+<p>The ssh server is an emulation of the <span style="font-style: italic;">UNIX environment and OpenSSH</span> for Windows, by Redhat, called cygwin</p>
+<p><b>(1a) </b>Login as Administrator<br>
+Windows XP <img src="cygwin-sshd_files/windows_002.png" alt="" border="0" height="17" width="22">- 
+login as a user with Administrator privilege; <br>
+<img src="cygwin-sshd_files/windows_002.png" alt="" border="0" height="17" width="22"> 
+Windows 2003 Server: login as local admin, it will not work for domain users or 
+domain admin.</p>
+<p><span style="font-weight: bold;">(1b)</span> Make sure the current admin/user has a <span style="font-weight: bold;">Windows password</span> set. <br>
+If not, use <span style="font-weight: bold;"><img style="width: 100px; height: 29px;" alt="g" src="cygwin-sshd_files/control-xp.png" align="middle"> </span>Control Panel...User Accounts to create a password.
+<br>
+Just to be on the safe side, after you created a password, logoff and then log 
+in again.</p>
+<p><b>(2a)</b> Create a folder c:\cygwin</p>
+<p><b>(2b)</b> <img style="border: 0px solid ; width: 38px; height: 32px;" src="cygwin-sshd_files/cygwin.png" alt="g" align="middle"> Download cygwin's setup.exe from <a href="http://www.cygwin.com/">http://www.cygwin.com/</a> and save <b>setup.exe</b>
+in c:\cygwin</p>
+<p>Cygwin's <b>setup.exe</b> has some uncommon properties, <a href="http://pigtail.net/LRP/printsrv/setup-reuse.html" onclick="return popitup('setup-reuse.html')">
+click here</a> to find out more.</p>
+<p>Click Start...Run...and type <font color="#660000"><b>c:\cygwin\setup.exe</b></font>
+<br>
+</p>
+<p>If you are asked to select "Just Me" or "All Users", choose "All Users"</p>
+When
+it asks for "<span style="font-weight: bold;">Local Package Directory</span>",
+type<span style="font-weight: bold; color: rgb(204, 0, 0);"> <span style="color: rgb(102, 0, 0);">
+c:\cygwin</span></span><br>
+<p>
+Choose a download site that is "close" to you.<br>
+When a selection screen comes up (you can resize the windows&nbsp;to see better),<br>
+click the little View button for
+"Full" view&nbsp; <a href="http://pigtail.net/LRP/printsrv/openssh-setup.png"><img style="border: 0px solid ; width: 64px; height: 28px;" src="cygwin-sshd_files/view-button.png" alt="g"></a>,<br>
+find the package "<span style="font-weight: bold; color: rgb(102, 0, 0);">openssh</span>", click on
+the word "<b>skip</b>" so that an <img style="border: 0px solid ; width: 18px; height: 21px;" src="cygwin-sshd_files/x-box.png" alt="x"> appears in Column B,<br>
+see <a href="http://pigtail.net/LRP/printsrv/openssh-setup.png">this illustration.</a><br>
+find the package "<font color="#660000"><b>tcp_wrappers</b></font>", click on the word "<b>skip</b>" so that an <img style="border: 0px solid ; width: 18px; height: 21px;" src="cygwin-sshd_files/x-box.png" alt="x"> appears in Column B,<br>
+find the package "<font color="#660000"><b>zlib</b></font>", click on the word "<b>skip</b>" 
+(it should be already selected) so that an <img style="border: 0px solid ; width: 18px; height: 21px;" src="cygwin-sshd_files/x-box.png" alt="x"> appears in Column B.</p>
+<p>
+<font color="#808080">tcp_wrappers provides host-based access control.<br>
+zlib is the compression and decompression library that is used by many 
+programs.</font></p>
+<p>Click <img style="border: 0px solid ; width: 75px; height: 24px;" src="cygwin-sshd_files/next-button.png" alt="next" align="middle"> to start installing cygwin and ssh.<br>
+Size of the basic cygwin system is more than 40 Meg, this may take a while.</p>
+<p>Take a coffee break.&nbsp;<img style="width: 72px; height: 73px;" alt="g" src="cygwin-sshd_files/java.gif" align="middle"></p>
+<p><b>(3) </b> Right click My Computer,
+Properties, Advanced, Environment Variables<br>
+See <a href="http://pigtail.net/LRP/printsrv/system-variables.png">this illustration (red dots)</a><br>
+Click the "New" <img style="border: 0px solid ; width: 78px; height: 23px;" src="cygwin-sshd_files/new-button.png" alt="new"> button to add a new entry to 
+<b>System variables</b>: <br>
+variable name is <b><font color="#660000">CYGWIN </font><font color="#cc0033"><br>
+</font></b>variable value is&nbsp;<font color="#660000"><b>ntsec tty</b></font><br>
+</p>
+<p><b>(4)</b> Right click My Computer, Properties, Advanced,
+Environment Variables<br>
+See <a href="http://pigtail.net/LRP/printsrv/system-variables.png">this illustration (green dots)</a><br>
+Select the Path variable and click the "Edit" <img style="border: 0px solid ; width: 75px; height: 21px;" src="cygwin-sshd_files/edit-button.png" alt="edit"> button:<br>
+append&nbsp; <b><font color="#660000">;c:\cygwin\bin</font><font color="#cc0033"> &nbsp;&nbsp;</font></b>to the end of the existing
+variable string.</p>
+<p><b>(5) </b>Open a cygwin window (by double clicking the<img style="border: 0px solid ; width: 38px; height: 32px;" src="cygwin-sshd_files/cygwin.png" alt="g" align="middle"> icon), a black screen pops open, type<br>
+<b><font color="#660000">ssh-host-config &nbsp; &nbsp;&nbsp; </font></b><font color="#660000"><span style="color: rgb(0, 0, 0);">(on slower computers, it may take several minutes to generate the dsa keys)</span></font><b><font color="#cc0000"><br>
+</font></b>When the script asks you about "<a href="http://pigtail.net/LRP/printsrv/privilege-sep.html" onclick="return popitup('privilege-sep.html')">privilege 
+separation</a>", answer <b><font color="#660000">yes</font></b><br>
+When the script asks about "<a href="http://pigtail.net/LRP/printsrv/privilege-sep.html" onclick="return popitup('privilege-sep.html')">create&nbsp;local user sshd</a>", answer <span style="font-weight: bold; color: rgb(102, 0, 0);">yes</span><br>
+When the script asks you about "<a href="http://pigtail.net/LRP/printsrv/what-service.html" onclick="return popitup('what-service.html')">install sshd as a service</a>", answer <b><font color="#660000">yes</font></b><br>
+When the script stops and asks you for "<b>CYGWIN=</b>" &nbsp; &nbsp; your answer is <font color="#660000"> <b>ntsec 
+tty</b></font>&nbsp; 
+<br>
+(<a href="http://pigtail.net/LRP/printsrv/ntsec.html" onclick="return popitup('ntsec.html')">click here</a> for an explanation of 
+<b>ntsec</b>) <br>
+(<a href="http://pigtail.net/LRP/printsrv/tty.html" onclick="return popitup('tty.html')">click here</a> for an explanation of 
+<b>tty</b> )<br>
+(thanks to Peter Reutemann of New Zealand and Ron Dozier of University of 
+Delaware)</p>
+<p><span style="font-style: italic;">See Note 25 (near the end of this web 
+page) if you need to run ssh-host-config again.</span></p>
+<p><b>(6) </b>While you are still in the (black) cygwin screen, <span style="font-weight: bold;">start
+the sshd service</span><br>
+<b><font color="#660000">net start sshd </font></b><br>
+or<br>
+<b><font color="#660000">cygrunsrv &nbsp;--start&nbsp; sshd</font></b></p>
+<p><a href="http://pigtail.net/LRP/printsrv/stop-sshd.html" onclick="return popitup('stop-sshd.html')">Click here</a> 
+on how 
+to stop the sshd service.</p>
+<p><b>(7)</b> Make sure <span style="font-weight: bold;">every Windows user</span> has a password set, if not,&nbsp;<br>
+go to&nbsp;<span style="font-weight: bold;"><img style="width: 100px; height: 29px;" alt="g" src="cygwin-sshd_files/control-xp.png" align="middle"> Control Panel.</span>...<span style="font-weight: bold;">User Accounts</span> and <span style="font-weight: bold;">create</span> a password.</p>
+<p><b>(7a)</b> Make sure every Windows user has done the following at least 
+once: <br>
+Login in as the Windows user, pop a console command screen by clicking 
+<b>Start...Run....</b><font color="#800000"><b>cmd<br>
+</b></font>Thanks to Magno Corrêa of Brazil for the tip in (7a)</p>
+<p><span style="font-weight: bold;">(8)</span> <img style="width: 72px; height: 12px;" alt="important" src="cygwin-sshd_files/important.png"> Pop a cygwin <img src="cygwin-sshd_files/cygwin.png" alt="g" align="middle" border="0" height="32" width="38">window, harmonize Windows user information with cygwin, otherwise they cannot login<br>
+<span style="font-weight: bold; color: rgb(102, 0, 0);">mkpasswd&nbsp;&nbsp; -cl &nbsp; &gt; &nbsp; /etc/passwd</span><br style="font-weight: bold; color: rgb(102, 0, 0);">
+<span style="font-weight: bold; color: rgb(102, 0, 0);">mkgroup &nbsp; --local &nbsp;&nbsp; &gt; &nbsp; /etc/group</span></p>
+<p>If your XP logs on to a domain, you most likely have to manually edit 
+/etc/group. <a href="http://pigtail.net/LRP/printsrv/passwd-group.html">See this page</a>.</p>
+<p><font color="#800000">mkpasswd</font> creates a password file from Windows' user list,
+<a href="http://pigtail.net/LRP/printsrv/mkpasswd.html" onclick="return popitup('mkpasswd.html')">click here</a> 
+for more details.<br>
+<font color="#800000">mkgroup</font> creates a group file from Windows' user list,
+<a href="http://pigtail.net/LRP/printsrv/mkgroup.html" onclick="return popitup('mkgroup.html')">click here</a> 
+for more details.<br>
+Thanks to John Skiggn of Cingular Wireless in Redmond, Washington for his tweak 
+on domain user /etc/group</p>
+<hr style="width: 100%; height: 2px;">
+Test to see if sshd is working, pop a cygwin <img src="cygwin-sshd_files/cygwin.png" alt="g" align="middle" border="0" height="32" width="38">window (note: the command below is <span style="color: rgb(204, 0, 0);">case sensitive</span>)<br>
+<span style="font-weight: bold; color: rgb(102, 0, 0);">whoami</span><font color="#660000"><b><br>
+ssh &nbsp; &nbsp;localhost<br>
+</b></font>or<br>
+<font color="#660000"><b>ssh&nbsp; -vvv&nbsp; localhost</b></font><br>
+or<b><font color="#660000"><br>
+ssh&nbsp;&nbsp;&nbsp; "$USERNAME@127.0.0.1"</font></b>
+<p> <img style="width: 15px; height: 15px;" alt="g" src="cygwin-sshd_files/no-smile.png">  
+If you get an error message like "ssh-exchange-identification: Connection closed by remote host",<br>
+it is probably caused by McAfee 8.0i, see <a href="http://pigtail.net/LRP/printsrv/mcafee-fix.html">this page 
+about 
+the fix</a>. Thanks to Ron Dozier of University of Delaware.</p>
+<p>If you get a prompt without error messages, type<br>
+<span style="font-weight: bold; color: rgb(102, 0, 0);">ls &nbsp;-lh &nbsp;/cygdrive/c</span> <br>
+if you see a directory listing, <span style="font-weight: bold;">success</span>! <img style="width: 15px; height: 15px;" alt="g" src="cygwin-sshd_files/smile.png">  <img style="width: 15px; height: 15px;" alt="g" src="cygwin-sshd_files/smile.png">&nbsp;<img style="width: 15px; height: 15px;" alt="g" src="cygwin-sshd_files/smile.png"><br>
+(type <b><font color="#660000">exit</font></b> to end the cygwin ssh
+session)&nbsp;</p>
+If you have a Windows&nbsp;username that contain space, expand the space into \ [space], <br>
+e.g. if the Windows login name is &nbsp;<span style="font-weight: bold;">Mickey mouse</span><span style="font-weight: bold; color: rgb(102, 0, 0);"><br>
+ssh &nbsp;Mickey\ &nbsp;mouse@127.0.0.1</span>
+<p>If you have a Unix system that does not know what to do with TERM cygwin, add <a href="http://pigtail.net/LRP/printsrv/term-cygwin.html">these scripts</a> to .login</p>
+<p>
+<span style="font-style: italic;">If you have troubles ssh into the server, try 
+run
+</span><font color="#660000"><b>ssh-user-config</b></font></p>
+<p style="color: rgb(153, 153, 153);">
+Thanks to Jared Kilgour for above $USERNAME variable substitution.<br>
+Thanks to Justin Kerk for the tip on quotes around $USERNAME to allow for spaces in username.<br>
+Thanks to Ron Dozier of University of Delaware for the Unix .login tweak.</p>
+<hr style="width: 100%; height: 2px;">
+<span style="font-weight: bold; color: rgb(204, 0, 0);"><img style="width: 169px; height: 35px;" alt="g" src="cygwin-sshd_files/windows-firewall.png" align="middle"></span><span style="font-weight: bold; color: rgb(0, 0, 153);"><br>
+</span><font color="#ff0000"><span style="font-weight: bold;">Windows XP
+SP2</span></font><span style="font-weight: bold; color: rgb(0, 0, 153);">&nbsp; open the Windows Firewall to allow TCP port 22 through</span><span style="font-weight: bold; color: rgb(204, 0, 0);"></span><br>
+<br>
+Click Start...Control Panel....Security Centre....Manage Security Settings for Windows
+Firewall....Exceptions tab....Add Port...<br>
+"Name of port" is <span style="font-weight: 700; color: rgb(102, 0, 0);">ssh</span> &nbsp;&nbsp; "Port number" is <span style="font-weight: bold; color: rgb(102, 0, 0);">22 </span>
+(check the "TCP" checkbox)<br>
+<span style="color: rgb(153, 153, 153);">
+(Thanks to Stefano of Sardegna, Italy </span><img alt="" src="cygwin-sshd_files/it.png" style="border: 1px solid ; color: rgb(153, 153, 153); width: 18px; height: 14px;"><span style="color: rgb(153, 153, 153);"> for his
+Windows Firewall reminder)</span>
+<p><span style="font-weight: 700; color: rgb(102, 0, 0);">If you previously used</span><span style="font-weight: bold; color: rgb(255, 0, 0);"><span style="color: rgb(102, 0, 0);"> Windows XP
+SP1</span> </span>and installed sshd service, then upgraded to Windows XP SP2, <br>
+The "upgrade"&nbsp;<span style="font-weight: bold;">disables</span> the sshd service and deletes the CYGWIN environment variable.<br>
+Re-enter the environment variables and path.<br>
+Click Start...Control Panel....Security Centre....Manage Security Settings for Windows
+Firewall....Exceptions tab....Add Port...<br>
+"Name of port" is <span style="font-weight: bold; color: rgb(102, 0, 0);">ssh</span> &nbsp;&nbsp; "Port number" is <span style="font-weight: bold; color: rgb(102, 0, 0);">22 </span>(check the "TCP" checkbox)<span style="font-weight: bold; color: rgb(204, 0, 0);"><br>
+</span><span style="color: rgb(153, 153, 153);">
+(Thanks to Chris Davitt of New Zealand
+</span><img style="color: rgb(153, 153, 153);" src="cygwin-sshd_files/nz.png" border="0" height="14" width="18"><span style="color: rgb(153, 153, 153);">&nbsp; for this SP1 
+-&gt; SP2 glitch)</span><br>
+</p>
+<hr style="width: 100%; height: 2px;"><span style="font-weight: bold;">Multiple Windows users <img style="width: 59px; height: 48px;" alt="g" src="cygwin-sshd_files/multiple-users.png" align="middle"></span><br>
+<br>
+Create other Windows&nbsp;users using the <span style="font-weight: bold;"><img style="width: 100px; height: 29px;" alt="g" src="cygwin-sshd_files/control-xp.png" align="middle"> </span><span style="font-weight: bold;">Control Panel</span>...<span style="font-weight: bold;">User Accounts</span>.<br>
+<span style="font-weight: bold; color: rgb(153, 0, 0);">After you created (or removed) Windows users</span><br>
+pop a <img src="cygwin-sshd_files/cygwin.png" alt="g" align="middle" border="0" height="32" width="38"> cygwin windows to&nbsp;harmonize Windows user information with cygwin, otherwise they cannot login<br>
+<span style="font-weight: bold; color: rgb(102, 0, 0);">mkpasswd &nbsp; --local &nbsp; &gt; &nbsp; /etc/passwd</span><br style="font-weight: bold; color: rgb(102, 0, 0);">
+<span style="font-weight: bold; color: rgb(102, 0, 0);">mkgroup &nbsp; --local &nbsp;&nbsp; &gt; &nbsp; /etc/group</span><span style="font-weight: bold; color: rgb(102, 0, 0);"><br>
+<br>
+</span><span style="font-weight: bold;"><img style="width: 59px; height: 48px;" alt="g" src="cygwin-sshd_files/multiple-users.png" align="middle"></span><br clear="all">
+Don't get too carry away with multiple users, if a user can successfully ssh into the box, he can<span style="font-weight: bold;"> 
+"cd"</span> to just about any directory.<br>
+<p>Note:&nbsp;
+The behaviors of Windows 2003 Server is different. <br>
+<a href="http://www.cs.bham.ac.uk/%7Esmp/projects/ssh-windows/">Follow this&nbsp;link</a> to install OpenSSH on Windows 2003 Server, by Stephen Pillinger of the School of Computer Science, University of 
+Birmingham.<br>
+&nbsp;</p>
+<hr style="width: 100%; height: 2px;">Users from the <span style="font-weight: bold;">internal network</span> (geeks call this a <span style="font-weight: bold;">LAN</span>) can<b><font color="#660000"><br>
+ssh
+&nbsp;usersname@ip_address &nbsp; (e.g. ssh
+&nbsp;&nbsp;john@192.168.0.100)</font></b>
+<p>On Unix/Linux systems, user names do not contain spaces. On Windows system, user names can have spaces.<br>
+If you have a Windows&nbsp;username that contain spaces, expand each space into \ [space], <br>
+e.g. if the Windows username is &nbsp;<span style="font-weight: bold;">Mickey mouse</span><br>
+<span style="font-weight: bold; color: rgb(102, 0, 0);">ssh &nbsp;Mickey\ &nbsp;mouse@192.168.0.100</span></p>
+<hr style="width: 100%; height: 2px;">
+<p><img style="width: 497px; height: 204px;" alt="g" src="cygwin-sshd_files/ssh-remote.png"></p>
+<p>If you have a NAT firewall, <b>port forward</b> (D-link calls this Virtual Server) TCP port 22 to the 
+(internal) IP address<br>
+of the <img src="cygwin-sshd_files/windows_002.png" alt="" border="0" height="17" width="22"> 
+Windows box where the sshd server is running. See above diagram.</p>
+<p>Users from the <span style="font-weight: bold;">outside</span> (geeks call this a <span style="font-weight: bold;">WAN</span>) can <b><font color="#660000"><br>
+ssh
+&nbsp;username@external_ip_address&nbsp;&nbsp;
+(e.g. ssh &nbsp;&nbsp;john@64.64.64.64 )<br>
+ssh &nbsp;mickey\ &nbsp; mouse@external_ip_address &nbsp;(e.g. &nbsp;ssh &nbsp;mickey\ &nbsp;mouse@64.64.64.64 )</font></b></p>
+<p>
+<img src="cygwin-sshd_files/no-smile.png" align="middle" border="0" height="15" width="15">
+<b>Caveat Emptor </b>
+<img src="cygwin-sshd_files/no-smile.png" align="middle" border="0" height="15" width="15"><b> :</b><br>
+-assuming you have an IP address that is accessible by the outside world, some 
+ISP do not give out outside-accessible IP address.<br>
+-assuming your ISP does not suffer from extreme paranoia, he/she allows "port 22 
+TCP" traffic through their network.<br>
+-assuming your firewall allows TCP port 22 and port forwards to the 
+computer running the ssh server.</p>
+<p>
+If you need to use TCP port 443 as the sshd listening port (instead of the 
+default port 22),
+<a href="http://pigtail.net/LRP/printsrv/port443.html" onclick="return popitup2( 'port443.html'  )">see this page</a>.<br>
+</p>
+<hr>
+<p><img src="cygwin-sshd_files/sftp.png" alt="g" border="0" height="204" width="497"></p>
+<p><img style="width: 15px; height: 15px;" alt="g" src="cygwin-sshd_files/smile.png"> &nbsp;As a 
+bonus, openssh includes <b style="color: rgb(0, 0, 153);">sftp</b> and <b style="color: rgb(0, 0, 153);">sftp-server</b> for 
+doing encrypted file transfers.<br>
+These two programs function much like the familiar ftp-client and ftp-server.</p>
+<p><img style="width: 32px; height: 24px;" alt="g" src="cygwin-sshd_files/transfer-button.png"> 
+For example, from a remote laptop, you can transfer (send and retrieve) files to 
+your home computer (see above diagram). <br>
+<font color="#660000"><b>sftp&nbsp; &nbsp;username@ip_address</b></font><font color="#990000"> &nbsp; </font>(e.g.&nbsp; sftp&nbsp; john@32.97.166.74 )<br>
+<font color="#660000"><b>sftp &nbsp;&nbsp;username@hostname</b> &nbsp;</font>
+(e.g. sftp&nbsp; john@supercompuer.ibm.com )<br>
+openSSH [which uses openSSL] has strong encryption capability.<br>
+The encryption used by openSSH can be either AES-128, AES-192, AES-256, 3DES, 
+Blowfish, cast-128, arcfour (RC4)<br>
+The default encryption algorithm (cipher) is AES-128-CBC. <br>
+You can 
+<a href="http://pigtail.net/LRP/printsrv/sshd_config.html" onclick="return popitup2('sshd_config.html')">
+force a particular encryption algorithm preference</a> (cipher) by adding a directive such as
+<font color="#660000"><b><br>
+Ciphers&nbsp;&nbsp; blowfish-cbc,aes128-cbc,3des-cbc</b></font>&nbsp;
+to&nbsp;/etc/sshd_config<br>
+The sftp client I like best is <a href="http://filezilla.sourceforge.net/">
+Filezilla</a>.</p>
+<p>
+<img src="cygwin-sshd_files/no-smile.png" align="middle" border="0" height="15" width="15">
+<b>Caveat Emptor </b>
+<img src="cygwin-sshd_files/no-smile.png" align="middle" border="0" height="15" width="15"><b> :</b><br>
+-assuming you have an IP address that is accessible by the outside world, some 
+ISP do not give out outside-accessible IP address.<br>
+-assuming your ISP does not suffer from extreme paranoia, he/she allows "port 22 
+TCP" traffic through their network.<br>
+-assuming your firewall allows TCP port 22 and port forwards to the 
+computer running the ssh server.</p>
+<hr>
+<p>After you  establish a ssh or sftp connection into the Windows box, <br>
+<span style="font-weight: bold;">changing  directory&nbsp;</span>is&nbsp;rather painful, for example, to change to "my documents", 
+type<br>
+<font color="#990000"><b><span style="color: rgb(102, 0, 0);">cd&nbsp;&nbsp;&nbsp; "/cygdrive/c/documents and 
+settings/$USERNAME/my documents"</span> </b></font></p>
+<p>Similarly, to change directory to d: drive<br>
+<font color="#990000"><b><span style="color: rgb(102, 0, 0);">cd&nbsp; &nbsp; 
+/cygdrive/d</span></b></font></p>
+<p>
+To reduce pain, use a graphical sftp client such as <a href="http://filezilla.sourceforge.net/">
+Filezilla</a>.<span style="font-weight: bold; color: rgb(102, 0, 0);">
+</span></p>
+<hr>
+<p><b>Where can you find a ssh or sftp client </b>?<br>
+(1) <a href="http://www.chiark.greenend.org.uk/%7esgtatham/putty/">Putty</a>
+is the best ssh client for Windows, it also
+has psftp.exe which is a console mode sftp client.<br>
+(2) Commercial software vendors such as <a href="http://www.vandyke.com/">VanDyke</a> Software.<br>
+(3) <a href="http://sourceforge.net/projects/filezilla">Filezilla</a>,
+a free, GNU (GPL) licensed sftp client. </p>
+<hr>
+<p>If you prefer to use a <b>graphical client </b>to do sftp file
+transfers,<br>
+purchase a high quality commercial software called <a href="http://www.vandyke.com/" target="_blank">SecureFX</a> <br>
+from VanDyke Software in Albuquerque, New Mexico, USA<br>
+or use <a href="http://sourceforge.net/projects/filezilla" target="_blank">Filezilla</a>, a free, GNU (GPL) licensed sftp client,<br>
+or use <a target="_blank" href="http://winscp.net/">WinSCP</a>,
+a free, GNU (GPL) licensed sftp and scp client.<br>
+Also, <b>ftp.ssh.com</b> in their <a href="ftp://ftp.ssh.com/pub/ssh" target="_blank">/pub/ssh</a> directory, there is a Windows version 
+of ssh and sftp client for non-commercial use,<br>
+thanks to Stephan of Rutgers State University of New Jersey <img src="cygwin-sshd_files/us.png" alt="g" border="0" height="14" width="18"> for the link.</p>
+<hr>
+<br>
+Other <b style="color: rgb(153, 0, 0);">very, very useful things</b>
+you
+can do with ssh is to <span style="font-weight: bold; color: rgb(153, 0, 0);">tunnel (wrap)&nbsp;pure tcp applications</span> under the <br>
+ssh protocol, giving them a strong cryptographic
+protection while traveling over the insecure public network.
+<p>openSSH [which uses openSSL] has strong encryption capability.<br>
+The encryption used by openSSH can be either AES-128, AES-192, AES-256, 3DES, 
+Blowfish, cast-128, arcfour (RC4)<br>
+The default encryption algorithm (cipher) is AES-128-CBC. <br>
+You can 
+<a href="http://pigtail.net/LRP/printsrv/sshd_config.html" onclick="return popitup2('sshd_config.html')">
+force a particular encryption algorithm preference</a> (cipher) by adding a line such as
+<font color="#660000"><b><br>
+Ciphers&nbsp;&nbsp; blowfish-cbc,aes128-cbc,3des-cbc</b></font>&nbsp;
+to&nbsp;/etc/sshd_config (Blowfish runs faster than AES-128)</p>
+<p>
+<img style="width: 497px; height: 204px;" alt="g" src="cygwin-sshd_files/tunnel-ssh.png">
+</p>
+<p>Below are some&nbsp;popular plain-text, pure TCP protocols that are unfortunately 
+still in common use today.<br>
+Fortunately these protocols&nbsp;can&nbsp;benefit from
+the protection of a ssh tunnel:<b><br>
+POP3</b> (tcp port 110)&nbsp;<br>
+<b>IMAP</b> (tcp port 143)&nbsp;<br>
+<b>SMTP</b> (tcp port 25)&nbsp;<br>
+<b>TELNET</b> (tcp port 21)&nbsp;<br>
+<span style="font-weight: bold;">VNC</span> (tcp port 5900)<br>
+<span style="font-weight: bold;">Print server</span> traffic (tcp port <b>9100</b>)</p>
+<p>Note: <br>
+The world is moving away (rather slowly) from&nbsp;plain text protocols by hardening them with TLS or SSL:<br>
+newer versions of POP3 servers have TLS support at port 110; and SSL support at<span style="font-weight: bold;"></span> port 995<br>
+newer versions of IMAP servers have TLS support at port 143; and SSL support at port 993<br>
+newer versions of SMTP servers have TLS support at port 25<br>
+<span style="color: rgb(153, 153, 153);">A</span><span style="color: rgb(153, 153, 153);">
+version of "</span><span style="font-weight: bold; color: rgb(153, 153, 153);">smtps</span><span style="color: rgb(153, 153, 153);">" uses port 465 with SSL support, now 
+it becomes legacy (depreciated).<br>
+SMTP can also use port 587 in plain text or TLS.</span><br>
+newer versions of telnet servers have SSL support at port 992</p>
+<p>See<a href="http://members.shaw.ca/nicholas.fong/vnc/"> this page
+on how to tunnel VNC traffic under ssh</a>.<br>
+See <a href="http://pigtail.net/LRP/printsrv/tunnel-how.html">this page on how to tunnel TCP
+applications under ssh.</a><br>
+See <a href="http://pigtail.net/nicholas/pptp/">this page on how to set up a 
+dedicated PPTP VPN server </a>at your home office or main office.<br>
+See <a href="http://pigtail.net/nicholas/telus/">this page on how to set up a 
+tethered modem using Telus Blackberry smart-phone</a> to connect to laptop.</p>
+<p>Sometimes, there are applications such as mid-night back-up of files
+to a remote Linux server using "rsync encrypted with ssh",&nbsp;<br>
+you&nbsp;want to be able to ssh from one machine to another machine without a person sitting at the console to type a password.<br>
+<a href="http://pigtail.net/LRP/printsrv/no-passwd.html">See this page</a> on how to ssh from one machine into another machine without typing a password, i.e, 
+<br>
+how to use <span style="font-weight: bold; color: rgb(204, 0, 0);">public key authentication</span>.</p>
+<p>Once you can ssh from one machine to another machine without typing a 
+password, your task of doing rsync over ssh<br>
+is practically 90% done. Furthermore, create a batch file and invoke this batch 
+file from Control Panel's "Schedule Tasks"<br>
+will do secure backup automatically. In Linux world, add a cron job to do "rsync 
+-e ssh"<br>
+<br>
+<img alt="public-key-authentication" src="cygwin-sshd_files/no-passwd.png"><br>
+</p>
+<hr style="width: 100%; height: 2px;">
+<p><b><font color="#660000">How to install a ssh client (called ssh)</font><font color="#993333"><br>
+</font></b><a href="http://pigtail.net/LRP/printsrv/cygwin-ssh.html">Click here</a> for a tutorial on
+how to setup a ssh client on Windows 2000 or Windows XP <img src="cygwin-sshd_files/windows.png" alt="g" align="middle" border="0" height="17" width="22"></p>
+<p><b><font color="#660000">How to install a smtp server [exim] on a
+Windows machine</font><font color="#993333"><br>
+</font></b><a href="http://pigtail.net/LRP/exim/exim-cygwin.html">Click here</a> for a tutorial
+on how to setup <b>exim</b>, a mail transfer agent<br>
+on Windows 2000 or Windows XP <img src="cygwin-sshd_files/windows.png" alt="g" align="middle" border="0" height="17" width="22"> as a 
+<font color="#0000ff"> <span style="font-weight: bold;">learning
+exercise</span></font>.&nbsp;</p>
+<p><span style="font-weight: bold;">Note 25</span>: if you run ssh-host-config when sshd is installed, ssh-host-config will not ask for 
+the CYGWIN
+value. <br>
+In that case, &nbsp;<span style="font-style: italic;">stop</span> and <span style="font-style: italic;">remove</span> the sshd service,&nbsp;then run the ssh-host-config 
+script again, see below.</p>
+<p><font color="#660000"><b>cygrunsrv &nbsp;--stop&nbsp; sshd<br>
+cygrunsrv &nbsp;--remove sshd<br>
+ssh-host-config<br>
+cygrunsrv &nbsp;--start sshd</b></font></p>
+<p><font color="#660000"><b>Go to Control Panel, Classic View, Administrative 
+Tools, Computer Management,<br>
+or click Start...Run...compmgmt.msc<br>
+delete the sshd user account.</b></font></p>
+<p>Thanks to Dave Abrahams of Boost Consulting for the sshd user account 
+deletion hint.</p>
+<hr style="width: 100%; height: 2px;">
+<p>Reference:&nbsp;<a href="http://cygwin.com/cygwin-ug-net/"><span style="text-decoration: underline;">http://cygwin.com/cygwin-ug-net/</span></a></p>
+<p>Thanks to Mike Skallas for his tips on "privilege separation" during
+the setup script.<br>
+Thanks to Jan Haul of Hamburg, Germany <img src="cygwin-sshd_files/de.png" alt="g" border="0" height="14" width="18"> for his WinSCP&nbsp;link.<br>
+Thanks to Brad Erdman, Institute for Advanced Computer Studies,
+University of Maryland, USA <img src="cygwin-sshd_files/us.png" alt="g" border="0" height="14" width="18"><br>
+for his confirmation of cygwin-sshd working on Windows Server 2003 <img src="cygwin-sshd_files/windows_002.png" alt="" border="0" height="17" width="22"><br>
+Thanks to Richard Goodman of UK&nbsp;<img style="width: 18px; height: 14px;" alt="g" src="cygwin-sshd_files/uk.png"> for his tips on the order of CYGWIN variable.<br>
+You can also use <a href="http://sshwindows.sourceforge.net/">sshwindows</a>
+from Sourceforge to install ssh and sshd on Windows without the full
+cygwin package.<br>
+<a href="http://www.lns.cornell.edu/public/COMP/cygwin/cyg_inst_net.html">http://www.lns.cornell.edu/public/COMP/cygwin/cyg_inst_net.html</a> is the link 
+to install Cygwin with Xfree86. Thanks to Richard Ward for this link.</p>
+<p><a href="http://pigtail.net/LRP/printsrv/disclaimer.html">Disclaimer</a></p>
+<p><font size="3">©</font> 2003-2007 Nicholas Fong 
+<img src="cygwin-sshd_files/fong.png" alt="" border="0" height="15" width="129"></p>
+<p>Last revised:&nbsp; July 22, 2007</p>
+</body></html>

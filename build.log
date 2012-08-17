@@ -1,0 +1,276 @@
+MakeNSIS v2.37-2 - Copyright 1995-2008 Contributors
+See the file COPYING for license details.
+Credits can be found in the Users Manual.
+
+Command line defined: "RELEASETYPE=Nightly"
+Command line defined: "VERSION=0_1-20090227"
+Changing directory to: "/home/tudor/development/syn/SYNplayer/build/windows/packageprep"
+
+Processing script file: "/home/tudor/development/syn/SYNplayer/build/windows/packageprep/nsisinstaller.nsi"
+Processing plugin dlls: "/usr/share/nsis/Plugins/*.dll"
+ - AdvSplash::show
+ - Banner::destroy
+ - Banner::getWindow
+ - Banner::show
+ - BgImage::AddImage
+ - BgImage::AddText
+ - BgImage::Clear
+ - BgImage::Destroy
+ - BgImage::Redraw
+ - BgImage::SetBg
+ - BgImage::SetReturn
+ - BgImage::Sound
+ - Dialer::AttemptConnect
+ - Dialer::AutodialHangup
+ - Dialer::AutodialOnline
+ - Dialer::AutodialUnattended
+ - Dialer::GetConnectedState
+ - InstallOptions::dialog
+ - InstallOptions::initDialog
+ - InstallOptions::show
+ - LangDLL::LangDialog
+ - Math::Script
+ - NSISdl::download
+ - NSISdl::download_quiet
+ - Splash::show
+ - StartMenu::Init
+ - StartMenu::Select
+ - StartMenu::Show
+ - System::Alloc
+ - System::Copy
+ - System::Free
+ - System::Int64Op
+ - System::Store
+ - TypeLib::GetLibVersion
+ - TypeLib::Register
+ - TypeLib::UnRegister
+ - UserInfo::GetAccountType
+ - UserInfo::GetName
+ - UserInfo::GetOriginalAccountType
+ - VPatch::GetFileCRC32
+ - VPatch::GetFileMD5
+ - VPatch::vpatchfile
+ - nsDialogs::Create
+ - nsDialogs::CreateControl
+ - nsDialogs::CreateItem
+ - nsDialogs::GetUserData
+ - nsDialogs::OnBack
+ - nsDialogs::OnChange
+ - nsDialogs::OnClick
+ - nsDialogs::OnNotify
+ - nsDialogs::SelectFileDialog
+ - nsDialogs::SelectFolderDialog
+ - nsDialogs::SetRTL
+ - nsDialogs::SetUserData
+ - nsDialogs::Show
+ - nsExec::Exec
+ - nsExec::ExecToLog
+ - nsExec::ExecToStack
+
+!define: "AppName"="Flywire"
+!define: "AppVersion"="0.2"
+!define: "ShortName"="flywire"
+!define: "JRE_VERSION"="1.6.2"
+!define: "Vendor"="Bentokit Project"
+!include: "/usr/share/nsis/Include/MUI.nsh"
+!include: "/usr/share/nsis/Contrib/Modern UI/System.nsh"
+NSIS Modern User Interface version 1.8 - © 2002-2008 Joost Verburg (/usr/share/nsis/Contrib/Modern UI/System.nsh:8)
+!define: "MUI_INCLUDED"=""
+!define: "MUI_SYSVERSION"="1.8"
+!define: "MUI_VERBOSE"="3"
+!include: closed: "/usr/share/nsis/Contrib/Modern UI/System.nsh"
+!include: closed: "/usr/share/nsis/Include/MUI.nsh"
+Name: "Flywire"
+OutFile: "Flywire-Nightly-Windows-x86-0_1-20090227.exe"
+InstallDir: "$PROGRAMFILES\Bentokit\Flywire"
+InstallRegKey: "HKLM\Software\Bentokit\Flywire\Install_Dir"
+!define: "MUI_ICON"="/usr/share/nsis\Contrib\Graphics\Icons\orange-install-nsis.ico"
+!define: "MUI_UNICON"="/usr/share/nsis\Contrib\Graphics\Icons\orange-uninstall-nsis.ico"
+!define: "MUI_HEADERIMAGE"=""
+!define: "MUI_HEADERIMAGE_LEFT"=""
+!define: "MUI_HEADERIMAGE_BITMAP"="/usr/share/nsis\Contrib\Graphics\Header\orange.bmp"
+!define: "MUI_HEADERIMAGE_UNBITMAP"="/usr/share/nsis\Contrib\Graphics\Header\orange-uninstall.bmp"
+!define: "MUI_WELCOMEFINISHPAGE_BITMAP"="/usr/share/nsis\Contrib\Graphics\Wizard\orange.bmp"
+!define: "MUI_UNWELCOMEFINISHPAGE_BITMAP"="/usr/share/nsis\Contrib\Graphics\Wizard\orange-uninstall.bmp"
+!define: "MUI_ABORTWARNING"=""
+!insertmacro: MUI_LANGUAGE
+!insertmacro: end of MUI_LANGUAGE
+!define: "MUI_TEXT_LICENSE_TITLE"="GNU General Public License v3"
+!insertmacro: MUI_PAGE_LICENSE
+!insertmacro: end of MUI_PAGE_LICENSE
+!insertmacro: MUI_PAGE_COMPONENTS
+!insertmacro: end of MUI_PAGE_COMPONENTS
+!insertmacro: MUI_PAGE_DIRECTORY
+!insertmacro: end of MUI_PAGE_DIRECTORY
+!insertmacro: MUI_PAGE_INSTFILES
+!insertmacro: end of MUI_PAGE_INSTFILES
+!insertmacro: MUI_UNPAGE_CONFIRM
+!insertmacro: end of MUI_UNPAGE_CONFIRM
+!insertmacro: MUI_UNPAGE_INSTFILES
+!insertmacro: end of MUI_UNPAGE_INSTFILES
+Section: "Flywire (required)"
+SetShellVarContext: all
+SetOutPath: "$INSTDIR"
+SetOverwrite: on
+File: "Flywire.jar" [compress] 56690/60421 bytes
+File: Returning to: "."
+SetOutPath: "$INSTDIR\bin"
+File: "logo.png" [compress] 17917 bytes
+File: Returning to: "bin"
+File: "play.png" [compress] 4514 bytes
+File: Returning to: "bin"
+File: "playdisabled.png" [compress] 4365 bytes
+File: Returning to: "bin"
+File: "stop.png" [compress] 3240 bytes
+File: Returning to: "bin"
+File: "stopdisabled.png" [compress] 3210 bytes
+File: Returning to: "bin"
+File: "LICENSE.txt" [compress] 12138/35147 bytes
+File: Returning to: "."
+File: "flywire.ico" [compress] 6743/30590 bytes
+File: Returning to: "."
+WriteRegStr: HKLM\SOFTWARE\Bentokit\Flywire\Install_Dir=$INSTDIR
+WriteRegStr: HKLM\Software\Microsoft\Windows\CurrentVersion\Uninstall\Flywire\DisplayName=Flywire
+WriteRegStr: HKLM\Software\Microsoft\Windows\CurrentVersion\Uninstall\Flywire\UninstallString="$INSTDIR\uninstall.exe"
+WriteRegDWORD: HKLM\Software\Microsoft\Windows\CurrentVersion\Uninstall\Flywire\NoModify=1
+WriteRegDWORD: HKLM\Software\Microsoft\Windows\CurrentVersion\Uninstall\Flywire\NoRepair=1
+WriteUninstaller: "uninstall.exe"
+SectionEnd
+Section: "Start Menu Shortcuts"
+SetShellVarContext: all
+SetOutPath: "$INSTDIR"
+CreateDirectory: "$SMPROGRAMS\Bentokit\Flywire"
+CreateShortCut: "$SMPROGRAMS\Bentokit\Flywire\Flywire.lnk"->"javaw" -Xmx300m -jar Flywire.jar icon:$INSTDIR\flywire.ico,0, showmode=0x0, hotkey=0x0, comment=
+CreateShortCut: "$SMPROGRAMS\Bentokit\Flywire\Flywire (Debug Mode).lnk"->"java" -Xmx300m -jar Flywire.jar --debug icon:$INSTDIR\flywire.ico,0, showmode=0x0, hotkey=0x0, comment=
+CreateShortCut: "$SMPROGRAMS\Bentokit\Flywire\Uninstall.lnk"->"$INSTDIR\uninstall.exe"  icon:$INSTDIR\uninstall.exe,0, showmode=0x0, hotkey=0x0, comment=
+SectionEnd
+Section: "Uninstall"
+DeleteRegKey: HKLM\Software\Microsoft\Windows\CurrentVersion\Uninstall\Flywire
+DeleteRegKey: HKLM\SOFTWARE\Bentokit\Flywire
+Delete: "$INSTDIR\bin\*.*"
+Delete: "$INSTDIR\*.*"
+Delete: "$SMPROGRAMS\Bentokit\Flywire\*.*"
+RMDir: "$SMPROGRAMS\Bentokit\Flywire"
+RMDir: "$INSTDIR\bin"
+RMDir: "$INSTDIR"
+SectionEnd
+
+Processed 1 file, writing output:
+Adding plug-ins initializing function... Done!
+Processing pages... Done!
+Removing unused resources... Done!
+Generating language tables... warning: LangString "MUI_INNERTEXT_LICENSE_BOTTOM" is not set in language table of language English
+warning: LangString "MUI_TEXT_LICENSE_TITLE" is not set in language table of language English
+warning: LangString "MUI_TEXT_LICENSE_SUBTITLE" is not set in language table of language English
+warning: LangString "MUI_INNERTEXT_LICENSE_TOP" is not set in language table of language English
+warning: LangString "MUI_TEXT_COMPONENTS_TITLE" is not set in language table of language English
+warning: LangString "MUI_TEXT_COMPONENTS_SUBTITLE" is not set in language table of language English
+warning: LangString "MUI_INNERTEXT_COMPONENTS_DESCRIPTION_TITLE" is not set in language table of language English
+warning: LangString "MUI_INNERTEXT_COMPONENTS_DESCRIPTION_INFO" is not set in language table of language English
+warning: LangString "MUI_TEXT_DIRECTORY_TITLE" is not set in language table of language English
+warning: LangString "MUI_TEXT_DIRECTORY_SUBTITLE" is not set in language table of language English
+warning: LangString "MUI_TEXT_INSTALLING_TITLE" is not set in language table of language English
+warning: LangString "MUI_TEXT_INSTALLING_SUBTITLE" is not set in language table of language English
+warning: LangString "MUI_TEXT_FINISH_TITLE" is not set in language table of language English
+warning: LangString "MUI_TEXT_FINISH_SUBTITLE" is not set in language table of language English
+warning: LangString "MUI_TEXT_ABORT_TITLE" is not set in language table of language English
+warning: LangString "MUI_TEXT_ABORT_SUBTITLE" is not set in language table of language English
+warning: LangString "MUI_INNERTEXT_LICENSE_BOTTOM" is not set in language table of language English
+warning: LangString "MUI_TEXT_LICENSE_TITLE" is not set in language table of language English
+warning: LangString "MUI_TEXT_LICENSE_SUBTITLE" is not set in language table of language English
+warning: LangString "MUI_INNERTEXT_LICENSE_TOP" is not set in language table of language English
+warning: LangString "MUI_TEXT_COMPONENTS_TITLE" is not set in language table of language English
+warning: LangString "MUI_TEXT_COMPONENTS_SUBTITLE" is not set in language table of language English
+warning: LangString "MUI_INNERTEXT_COMPONENTS_DESCRIPTION_TITLE" is not set in language table of language English
+warning: LangString "MUI_INNERTEXT_COMPONENTS_DESCRIPTION_INFO" is not set in language table of language English
+warning: LangString "MUI_TEXT_DIRECTORY_TITLE" is not set in language table of language English
+warning: LangString "MUI_TEXT_DIRECTORY_SUBTITLE" is not set in language table of language English
+warning: LangString "MUI_TEXT_INSTALLING_TITLE" is not set in language table of language English
+warning: LangString "MUI_TEXT_INSTALLING_SUBTITLE" is not set in language table of language English
+warning: LangString "MUI_TEXT_FINISH_TITLE" is not set in language table of language English
+warning: LangString "MUI_TEXT_FINISH_SUBTITLE" is not set in language table of language English
+warning: LangString "MUI_TEXT_ABORT_TITLE" is not set in language table of language English
+warning: LangString "MUI_TEXT_ABORT_SUBTITLE" is not set in language table of language English
+warning: LangString "MUI_INNERTEXT_LICENSE_BOTTOM" is not set in language table of language English
+warning: LangString "MUI_TEXT_LICENSE_TITLE" is not set in language table of language English
+warning: LangString "MUI_TEXT_LICENSE_SUBTITLE" is not set in language table of language English
+warning: LangString "MUI_INNERTEXT_LICENSE_TOP" is not set in language table of language English
+warning: LangString "MUI_TEXT_COMPONENTS_TITLE" is not set in language table of language English
+warning: LangString "MUI_TEXT_COMPONENTS_SUBTITLE" is not set in language table of language English
+warning: LangString "MUI_INNERTEXT_COMPONENTS_DESCRIPTION_TITLE" is not set in language table of language English
+warning: LangString "MUI_INNERTEXT_COMPONENTS_DESCRIPTION_INFO" is not set in language table of language English
+warning: LangString "MUI_TEXT_DIRECTORY_TITLE" is not set in language table of language English
+warning: LangString "MUI_TEXT_DIRECTORY_SUBTITLE" is not set in language table of language English
+warning: LangString "MUI_TEXT_INSTALLING_TITLE" is not set in language table of language English
+warning: LangString "MUI_TEXT_INSTALLING_SUBTITLE" is not set in language table of language English
+warning: LangString "MUI_TEXT_FINISH_TITLE" is not set in language table of language English
+warning: LangString "MUI_TEXT_FINISH_SUBTITLE" is not set in language table of language English
+warning: LangString "MUI_TEXT_ABORT_TITLE" is not set in language table of language English
+warning: LangString "MUI_TEXT_ABORT_SUBTITLE" is not set in language table of language English
+warning: LangString "MUI_UNTEXT_CONFIRM_TITLE" is not set in language table of language English
+warning: LangString "MUI_UNTEXT_CONFIRM_SUBTITLE" is not set in language table of language English
+warning: LangString "MUI_UNTEXT_UNINSTALLING_TITLE" is not set in language table of language English
+warning: LangString "MUI_UNTEXT_UNINSTALLING_SUBTITLE" is not set in language table of language English
+warning: LangString "MUI_UNTEXT_FINISH_TITLE" is not set in language table of language English
+warning: LangString "MUI_UNTEXT_FINISH_SUBTITLE" is not set in language table of language English
+warning: LangString "MUI_UNTEXT_ABORT_TITLE" is not set in language table of language English
+warning: LangString "MUI_UNTEXT_ABORT_SUBTITLE" is not set in language table of language English
+warning: LangString "MUI_UNTEXT_CONFIRM_TITLE" is not set in language table of language English
+warning: LangString "MUI_UNTEXT_CONFIRM_SUBTITLE" is not set in language table of language English
+warning: LangString "MUI_UNTEXT_UNINSTALLING_TITLE" is not set in language table of language English
+warning: LangString "MUI_UNTEXT_UNINSTALLING_SUBTITLE" is not set in language table of language English
+warning: LangString "MUI_UNTEXT_FINISH_TITLE" is not set in language table of language English
+warning: LangString "MUI_UNTEXT_FINISH_SUBTITLE" is not set in language table of language English
+warning: LangString "MUI_UNTEXT_ABORT_TITLE" is not set in language table of language English
+warning: LangString "MUI_UNTEXT_ABORT_SUBTITLE" is not set in language table of language English
+warning: LangString "MUI_UNTEXT_CONFIRM_TITLE" is not set in language table of language English
+warning: LangString "MUI_UNTEXT_CONFIRM_SUBTITLE" is not set in language table of language English
+warning: LangString "MUI_UNTEXT_UNINSTALLING_TITLE" is not set in language table of language English
+warning: LangString "MUI_UNTEXT_UNINSTALLING_SUBTITLE" is not set in language table of language English
+warning: LangString "MUI_UNTEXT_FINISH_TITLE" is not set in language table of language English
+warning: LangString "MUI_UNTEXT_FINISH_SUBTITLE" is not set in language table of language English
+warning: LangString "MUI_UNTEXT_ABORT_TITLE" is not set in language table of language English
+warning: LangString "MUI_UNTEXT_ABORT_SUBTITLE" is not set in language table of language English
+Done!
+Generating uninstaller... Done!
+
+Output: "Flywire-Nightly-Windows-x86-0_1-20090227.exe"
+Install: 5 pages (320 bytes), 2 sections (2096 bytes), 130 instructions (3640 bytes), 112 strings (37176 bytes), 1 language table (318 bytes).
+Uninstall: 3 pages (192 bytes), 
+1 section (1048 bytes), 33 instructions (924 bytes), 61 strings (942 bytes), 1 language table (242 bytes).
+
+Using zlib compression.
+
+EXE header size:               73728 / 47104 bytes
+Install code:                  14339 / 43926 bytes
+Install data:                 112198 / 169192 bytes
+Uninstall code+data:           13174 / 26268 bytes
+CRC (0xD7FCC5EC):                  4 / 4 bytes
+
+Total size:                   213443 / 286494 bytes (74.5%)
+
+24 warnings:
+  LangString "MUI_INNERTEXT_LICENSE_BOTTOM" is not set in language table of language English
+  LangString "MUI_TEXT_LICENSE_TITLE" is not set in language table of language English
+  LangString "MUI_TEXT_LICENSE_SUBTITLE" is not set in language table of language English
+  LangString "MUI_INNERTEXT_LICENSE_TOP" is not set in language table of language English
+  LangString "MUI_TEXT_COMPONENTS_TITLE" is not set in language table of language English
+  LangString "MUI_TEXT_COMPONENTS_SUBTITLE" is not set in language table of language English
+  LangString "MUI_INNERTEXT_COMPONENTS_DESCRIPTION_TITLE" is not set in language table of language English
+  LangString "MUI_INNERTEXT_COMPONENTS_DESCRIPTION_INFO" is not set in language table of language English
+  LangString "MUI_TEXT_DIRECTORY_TITLE" is not set in language table of language English
+  LangString "MUI_TEXT_DIRECTORY_SUBTITLE" is not set in language table of language English
+  LangString "MUI_TEXT_INSTALLING_TITLE" is not set in language table of language English
+  LangString "MUI_TEXT_INSTALLING_SUBTITLE" is not set in language table of language English
+  LangString "MUI_TEXT_FINISH_TITLE" is not set in language table of language English
+  LangString "MUI_TEXT_FINISH_SUBTITLE" is not set in language table of language English
+  LangString "MUI_TEXT_ABORT_TITLE" is not set in language table of language English
+  LangString "MUI_TEXT_ABORT_SUBTITLE" is not set in language table of language English
+  LangString "MUI_UNTEXT_CONFIRM_TITLE" is not set in language table of language English
+  LangString "MUI_UNTEXT_CONFIRM_SUBTITLE" is not set in language table of language English
+  LangString "MUI_UNTEXT_UNINSTALLING_TITLE" is not set in language table of language English
+  LangString "MUI_UNTEXT_UNINSTALLING_SUBTITLE" is not set in language table of language English
+  LangString "MUI_UNTEXT_FINISH_TITLE" is not set in language table of language English
+  LangString "MUI_UNTEXT_FINISH_SUBTITLE" is not set in language table of language English
+  LangString "MUI_UNTEXT_ABORT_TITLE" is not set in language table of language English
+  LangString "MUI_UNTEXT_ABORT_SUBTITLE" is not set in language table of language English

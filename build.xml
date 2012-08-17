@@ -1,0 +1,305 @@
+<project name="Flywire" default="dist" basedir=".">
+    <description>
+        Flywire build file (for Linux build environment, but may work on others)
+        Requires NSIS to build Windows Installers.
+        Requires makedmg to make OSX installer DMG file.
+        See http://www.trampolinesystems.com/blog/machines/2008/05/19/creating-dmg-files-without-macos-x/
+        Expects -Dplatform={platform}
+        Where {platform} is one of "windows", "linux", "osx"
+    </description>
+    <!-- set global properties for this build -->
+    <property name="build.compiler" value="javac1.6"/>
+    <property name="source_level" value="1.6"/>
+    <property name="target_level" value="1.6"/>
+    <property name="packagepath" value="org/bentokit"/>
+    <property name="package"  value="org.bentokit"/>
+    <property name="package.name"  value="flywire"/>
+    <property name="package.section"  value="devel"/>
+    <property name="src" location="src/${packagepath}"/>
+    <property name="bin" location="bin"/>
+    <property name="lib" location="lib"/>
+    <property name="jmfhome" location="/opt/JMF-2.1.1e"/>
+    <property name="jarname" value="Flywire"/>
+    <property name="releasetype" value="Nightly"/>
+    <property name="package.upstream.version" value="0.2"/>
+    <property name="build" location="build"/>
+    <property name="dist" location="dist"/>
+    <property file="build.${platform}.properties"/> <!-- Supplies builddir, installersrc, and platformspecificlibs parameters -->
+
+    <path id="project.class.path">
+        <pathelement location="${build}/classes" />
+        <pathelement location="${jmfhome}/lib/jmf.jar" />
+        <pathelement location="mp3plugin.jar" />
+        <pathelement location="${lib}/j-ogg-all.jar" />
+        <pathelement location="${lib}/j-ogg-jmfd.jar" />
+        <pathelement location="${lib}/j-ogg-flacd.jar" />
+        <pathelement location="${lib}/j-ogg-oggd.jar" />
+        <pathelement location="${lib}/j-ogg-theorad.jar" />
+        <pathelement location="${lib}/j-ogg-vorbisd.jar" />
+    </path>
+
+  <taskdef name="nsis" classname="net.sf.nsisant.Task"> 
+      <classpath location="compile_lib/nsisant-1.2.jar"/>
+  </taskdef>
+  <taskdef name="debian-package" classname="com.googlecode.ant_deb_task.Deb"> 
+      <classpath location="compile_lib/ant-deb-0.0.1.jar"/>
+  </taskdef>
+  <taskdef name="desktopEntry" classname="com.googlecode.ant_deb_task.DesktopEntry">
+      <classpath location="compile_lib/ant-deb-0.0.1.jar"/>
+  </taskdef>
+
+  <target name="dist_debian" depends="tar">
+        <tstamp>
+            <format property="changelog.date" pattern="EEE, dd MMM yyyy" />
+        </tstamp>
+        <!-- Check today's date exists in the changelog! -->
+       <fail message="Need to create a changelog file.  Use dch --create -c docs/changelog.">
+           <condition>            
+               <not>
+                   <available file="docs/changelog" />
+               </not>
+           </condition>
+       </fail>
+       <loadfile srcFile="docs/changelog" property="changelog" />        
+       <fail message="Need to modify the changelog to include today's date and version!  Need to see ${changelog.date} and ${package.upstream.version}">
+
+           <condition>            
+               <or>
+                   <not>
+                        <contains substring="${changelog.date}" string="${changelog}" />
+                   </not>
+                   <not>
+                        <contains substring="${package.upstream.version}" string="${changelog}" />
+                   </not>
+               </or>
+           </condition>
+       </fail>
+
+       <mkdir dir="dist"/>
+       <debian-package
+                    package="${package.name}"
+                    todir="dist"
+                    section="${package.section}"
+                    depends="sun-java6-jre | sun-java6-jdk">
+            <version upstream="${package.upstream.version}"/>
+            <maintainer name="${package.maintainer.name}" email="${package.maintainer.email}"/>
+            <description synopsis="${package.synopsis}">${package.description}</description>
+            <changelog file="docs/changelog" />
+            <tarfileset dir="${build}/tarprep" />
+      </debian-package>
+  </target>
+
+  <target name="tar" depends="jar">
+      <mkdir dir="${build}"/>
+      <mkdir dir="${build}/tarprep"/>
+      <mkdir dir="${build}/tarprep/usr"/>
+      <mkdir dir="${build}/tarprep/usr/lib"/>
+      <mkdir dir="${build}/tarprep/usr/lib/${package.name}"/>
+      <copy todir="${build}/tarprep/usr/lib/${package.name}">
+          <fileset dir="bin"/>
+      </copy>
+      <copy file="${build}/jar/${jarname}.jar" todir="${build}/tarprep/usr/lib/${package.name}" />
+      <copy file="LICENSE.txt" tofile="${build}/tarprep/LICENSE.txt" />
+      <tar destfile="${build}/Flywire-${releasetype}-${platform}-x86-0_1-${DSTAMP}.tar" basedir="${build}/tarprep" />
+  </target>
+  <target name="init">
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <!-- Create the build directory structure used by compile -->
+    <mkdir dir="${build}/classes"/>
+    <mkdir dir="${build}/classes/${packagepath}/"/>
+  </target>
+
+  <target name="clean"
+        description="clean up" >
+    <!-- Delete the ${build} and ${dist} directory trees -->
+    <delete dir="${build}"/>
+    <delete dir="${dist}"/>
+    <delete>
+      <fileset dir="." includes="errors-*.log"/>
+      <fileset dir="." includes="*\~"/>
+    </delete>
+  </target>
+
+  <target name="flywire" depends="init"
+        description="compile the source " >
+      <!-- Copy the java code from ${src} into ${build}/src -->
+      <copy todir="${build}" overwrite="true">
+          <fileset dir="${src}"/>
+      </copy>
+      <!-- Mark with the version number -->
+      <echo file="${build}/VERSION.txt" append="false">${releasetype}-${version}${versionsuffix}-${DSTAMP}</echo>
+      <!-- Compile the java code from ${build} into ${build} -->
+      <echo message="Compile the java code from ${src} into ${build}/classes with path ${toString:project.class.path}" />
+      <javac debug="on" debuglevel="lines,vars,source" srcdir="${build}" destdir="${build}/classes" classpathref="project.class.path" source="${source_level}" target="${target_level}">
+        <include name="Flywire.java" />
+        <include name="AboutBox.java" />
+        <include name="AnnouncementsPanel.java" />
+        <include name="AutomaticDJ.java" />
+        <include name="ClientHttpRequest.java" />
+        <include name="Constants.java" />
+        <include name="ErrorAdapter.java" />
+        <include name="ErrorHandler.java" />
+        <include name="ErrorListener.java" />
+        <include name="FileDownloadListener.java" />
+        <include name="IDsPanel.java" />
+        <include name="InfoPanel.java" />
+        <include name="ListLoader.java" />
+        <include name="MediaItem.java" />
+        <include name="MediaItemListener.java" />
+        <include name="MusicLibraryPanel.java" />
+        <include name="MusicLibraryUtils.java" />
+        <include name="MusicPickerPanel.java" />
+        <include name="ParameterHandler.java" />
+        <include name="PlayControl.java" />
+        <include name="PlayList.java" />
+        <include name="Pref.java" />
+        <include name="SelectionList.java" />
+        <include name="ShowMediaPanel.java" />
+        <include name="SoftwareUpdater.java" />
+        <include name="TimedEvent.java" />
+        <include name="TimedEventController.java" />
+        <include name="Track.java" />
+    </javac>
+  </target>
+  
+  <target name="flywire_run" depends="jar">
+      <copy file="${build}/VERSION.txt" tofile="VERSION.txt" />
+      <java dir="${build}/jar/" jar="${build}/jar/Flywire.jar" fork="true">
+          <env key="LD_LIBRARY_PATH" path="/usr/lib/jni/" />
+          <arg value="--debug" />
+          <arg value="-ml=http://www.musicbrainz.org/ws/1" />
+      </java>  
+      <delete file="VERSION.txt" />
+  </target>
+
+  <target name="flywire_run_nostorage" depends="jar">
+      <copy file="${build}/VERSION.txt" tofile="VERSION.txt" />
+      <java jar="${build}/jar/Flywire.jar" fork="true">
+          <env key="LD_LIBRARY_PATH" path="/usr/lib/jni/" />
+          <arg value="--debug" />
+          <arg value="--no-storage" />
+      </java>  
+      <delete file="VERSION.txt" />
+  </target>
+
+  <target name="flywire_run_nodebug" depends="jar">
+      <copy file="${build}/VERSION.txt" tofile="VERSION.txt" />
+      <java jar="${build}/jar/Flywire.jar" fork="true">
+          <env key="LD_LIBRARY_PATH" path="/usr/lib/jni/" />
+      </java>  
+      <delete file="VERSION.txt" />
+  </target>
+
+  <target name="flywire_run_errorsonly" depends="jar">
+      <copy file="${build}/VERSION.txt" tofile="VERSION.txt" />
+      <java jar="${build}/jar/Flywire.jar" fork="true">
+          <env key="LD_LIBRARY_PATH" path="/usr/lib/jni/" />
+          <arg value="--debug=ERROR" />
+      </java>  
+      <delete file="VERSION.txt" />
+  </target>
+
+  <target name="jar" depends="flywire">
+      <mkdir dir="${build}/classes"/>
+      <mkdir dir="${build}/jarprep"/>
+      <mkdir dir="${build}/jarprep/bin"/>
+      <copy todir="${build}/jarprep/bin">
+          <fileset dir="bin"/>
+      </copy>
+      <mkdir dir="${build}/jar"/>
+      <jar destfile="${build}/jar/${jarname}.jar" basedir="${build}/classes">
+          <manifest>
+              <attribute name="Class-Path" value="mp3plugin.jar j-ogg-all.jar j-ogg-flacd.jar j-ogg-jmfd.jar j-ogg-oggd.jar j-ogg-theorad.jar j-ogg-vorbisd.jar jmf.jar" />
+              <attribute name="Main-Class" value="${package}.Flywire"/>
+          </manifest>
+      </jar>
+      <copy todir="${build}/jar">
+          <fileset dir="lib"/>
+      </copy>
+  </target>
+
+  <target name="load_testmedia">
+      <copy todir="${build}/jar/">
+          <fileset dir="../media"/>
+      </copy>
+  </target>
+
+  <target name="flywire_test" depends="flywire,load_testmedia,flywire_run">
+  </target>
+
+  <target name="flywire_zip" depends="jar">
+      <mkdir dir="${build}"/>
+      <mkdir dir="${build}/zipprep"/>
+      <mkdir dir="${build}/zipprep/bin"/>
+      <copy file="${installersrc}/lib/${platformspecificlibs}" todir="${build}/zipprep" />
+      <copy todir="${build}/zipprep/bin">
+          <fileset dir="bin"/>
+      </copy>
+      <copy todir="${build}/zipprep">
+          <fileset dir="lib"/>
+      </copy>
+      <copy file="${build}/jar/Flywire.jar" todir="${build}/zipprep" />
+      <copy file="LICENSE" tofile="${build}/zipprep/LICENSE.txt" />
+      <zip destfile="${build}/Flywire-Nightly-${platform}-x86-0_1-${DSTAMP}.zip" basedir="${build}/zipprep" level="9" />
+  </target>
+
+  <target name="flywire_windowsinstaller" depends="jar">
+      <mkdir dir="${build}"/>
+      <mkdir dir="${build}/packageprep"/>
+      <mkdir dir="${build}/packageprep/bin"/>
+      <copy todir="${build}/packageprep/bin">
+          <fileset dir="bin"/>
+      </copy>
+      <copy todir="${build}/packageprep">
+          <fileset dir="lib"/>
+      </copy>
+      <copy file="${build}/jar/Flywire.jar" todir="${build}/packageprep" />
+      <copy file="LICENSE" tofile="${build}/packageprep/LICENSE.txt" />
+      <copy todir="${build}/packageprep">
+          <fileset dir="${installersrc}"/>
+      </copy>
+      <nsis script="${build}/packageprep/nsisinstaller.nsi" verbosity="4" out="build.log" noconfig="yes">
+          <define name="RELEASETYPE" value="Nightly"/>
+          <define name="VERSION" value="0_1-${DSTAMP}"/>
+          <!-- <scriptcmd cmd="AutoCloseWindow true"/> -->
+      </nsis>
+  </target>
+
+  <target name="flywire_osxinstaller" depends="jar">
+      <mkdir dir="${build}"/>
+      <mkdir dir="${build}/packageprep"/>
+      <copy todir="${build}/packageprep" >
+          <fileset dir="${installersrc}"/>
+      </copy>
+      <!-- <copy file="${installersrc}/lib/org.eclipse.swt.carbon.macosx.jar" todir="${build}/Flywire.app" /> -->
+      <copy todir="${build}/packageprep/Flywire.app/Contents/MacOS/bin">
+          <fileset dir="bin"/>
+      </copy>
+      <copy todir="${build}/packageprep/Flywire.app/Contents/MacOS">
+          <fileset dir="lib"/>
+      </copy>
+      <copy file="${build}/jar/Flywire.jar" todir="${build}/packageprep/Flywire.app/Contents/MacOS" />
+      <copy file="LICENSE" tofile="${build}/packageprep/Flywire.app/LICENSE.txt" />
+      <exec executable="/bin/chmod" failonerror="true">
+          <arg value="-R"/>
+          <arg value="a+rwX"/>
+          <arg value="${build}/packageprep"/>
+      </exec>
+      <exec executable="/bin/chmod" failonerror="true">
+          <arg value="a+x"/>
+          <arg value="${build}/packageprep/Flywire.app/Contents/MacOS/Flywire"/>
+      </exec>
+      <exec executable="/usr/bin/sudo" failonerror="true">
+          <arg value="/usr/bin/makedmg"/>
+          <arg value="${build}/Flywire.dmg"/>
+          <arg value="Flywire"/>
+          <arg value="25"/>
+          <arg value="${build}/packageprep"/>
+      </exec>
+  </target>
+
+
+</project>
+
+

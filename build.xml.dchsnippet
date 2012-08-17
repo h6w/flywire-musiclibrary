@@ -1,0 +1,29 @@
+  <target name="editChangelog" if="do.editchangelog">
+    <exec executable="dch">
+      <arg value="-a"/>
+      <arg value="-c"/>
+      <arg value="docs/changelog"/>
+    </exec>
+  </target>
+
+        <input
+        message="Checking for valid date and version in changelog. Continue? (y/n)?"
+        validargs="y,n"
+        addproperty="do.editchangelog"
+        />
+        <condition property="do.editchangelog">            
+            <or>
+                <not><contains substring="${changelog.date}" string="${changelog}" /></not>
+                <not><contains substring="${package.upstream.version}" string="${changelog}" /></not>
+            </or>
+        </condition>
+        <antcall target="editChangelog" />
+
+        <parallel>
+           <sequential>
+               <loadfile srcFile="docs/changelog" property="changelog" />
+               <waitfor message="Need to modify the changelog to include today's date and version!  Need to see ${changelog.date} and ${package.upstream.version}">
+               </waitfor>
+               <sleep seconds="30"/>
+           </sequential>
+        </parallel>
